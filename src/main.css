@@ -12,3 +12,7 @@ p {
   font-family: "Ubuntu Mono";
   font-size: 16px;
 }
+
+#underlined {
+  text-decoration: underline;
+}

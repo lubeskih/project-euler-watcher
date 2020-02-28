@@ -7,28 +7,27 @@ import archive from "./archive.json";
 // Style
 import "bootstrap/dist/css/bootstrap.css";
 
-// interface IArchive {
-//   id: string;
-//   link: string;
-//   title: string | null;
-//   solves: number;
-// }
-
 interface IProps {}
+
 interface IState {
-  data: any[];
+  stamp: string;
+  data: any;
 }
 
 class Main extends Component<IProps, IState> {
   constructor(props: IProps) {
     super(props);
     this.state = {
+      stamp: "N/A",
       data: []
     };
   }
 
   componentDidMount() {
-    this.setState({ data: archive.slice(0, 15) });
+    this.setState({
+      stamp: archive[0] as string,
+      data: archive[1].slice(0, 15)
+    });
   }
 
   render() {
@@ -47,19 +46,20 @@ class Main extends Component<IProps, IState> {
                 </tr>
               </thead>
               <tbody>
-                {data.map(n => (
+                {data.map((n: any) => (
                   <tr>
                     <th scope="row">{n.id}</th>
                     <td>
                       {" "}
                       <a
                         target="_blank"
+                        rel="noopener noreferrer"
                         href={`https://projecteuler.net/problem=${n.id}`}
                       >
                         {n.title}
                       </a>
                     </td>
-                    <td>{n.solves}</td>
+                    <td>{new Intl.NumberFormat().format(n.solves)}</td>
                   </tr>
                 ))}
               </tbody>
@@ -69,8 +69,15 @@ class Main extends Component<IProps, IState> {
             <h6>About this site</h6>
             <p>
               What you see here is a page that mirrors the{" "}
-              <a href="#">Project Euler archive page</a> but enables you to
-              search and sort through the problems more efficiently.
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://projecteuler.net/archives"
+              >
+                Project Euler archive page
+              </a>{" "}
+              but enables you to search and sort through the problems more
+              efficiently.
             </p>
 
             <h6>Initial problem</h6>
@@ -85,19 +92,33 @@ class Main extends Component<IProps, IState> {
               Every two hours, a cron starts a script that scrapes the problems
               from the archive page, and dumps the data into a JSON file. This
               page serves you the JSON file (which is about 80KB-100KB, or about
-              0.1 MB), and with simple JavaScript magic, basic features of
+              0.1 MB), and with trivial JavaScript magic, basic features of
               sorting and searching are implemented.
             </p>
             <h6>Other</h6>
             <div className="other"></div>
             <p>
               You can find the <strong>GitHub REPOSITORY</strong>{" "}
-              <a href="#">here</a>. Written with ❤️ by <a href="#">lh.mk</a>.
-              Enjoy using it as I enjoyed writing it.{" "}
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://github.com/lubeskih/project-euler-watcher"
+              >
+                here
+              </a>
+              . Written with ❤️ by{" "}
+              <a target="_blank" rel="noopener noreferrer" href="https://lh.mk">
+                lh.mk
+              </a>
+              . Enjoy using it as I enjoyed writing it.{" "}
             </p>
           </div>
         </div>
         <hr />
+        <p>
+          You are seeing results scraped on:{" "}
+          <span id="underlined">{archive[0]}</span>
+        </p>
       </div>
     );
   }
