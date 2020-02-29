@@ -5,11 +5,11 @@ import datetime
 
 from bs4 import BeautifulSoup
 
-num_of_pages = 1
+num_of_pages = 14
 
 dump = []
 
-def extract(rows):
+def extract(rows, dump_position):
     for row in rows:
         cells = row.findChildren('td')
         json_object = dict()
@@ -20,16 +20,17 @@ def extract(rows):
             json_object["title"] = cells[1].string
             json_object["solves"] = int(cells[2].string)
 
-            dump[1].append(json_object)
+            dump[dump_position].append(json_object)
         except IndexError as e:
             pass
-
 
 def main():
     json_object = dict()
     currentDT = datetime.datetime.now()
     dump.append(currentDT.strftime("%a, %b %d, %Y at %I:%M %p"))
-    dump.append([])
+    
+    dump.append([]) # Archive
+    dump.append([]) # Recent
 
     for page in range(1, num_of_pages + 1):
         page_body = requests.get(f"https://projecteuler.net/archives;page={page}")
@@ -37,11 +38,19 @@ def main():
         tables = soup.findChildren('table')
         rows = tables[0].findChildren(['th', 'tr'])
 
-        extract(rows)
+        extract(rows, 1)
         print(f"Page {page} extracted.")
         time.sleep(2)
     
-    with open('archive2.json', 'w') as w:
+    # Scrape top 10 recent
+    page_body = requests.get("https://projecteuler.net/recent")
+    soup = BeautifulSoup(page_body.content, 'html.parser')
+    tables = soup.findChildren('table')
+    rows = tables[0].findChildren(['th', 'tr'])
+
+    extract(rows, 2)
+
+    with open('archive.json', 'w') as w:
         json.dump(dump, w)
 
 main()
