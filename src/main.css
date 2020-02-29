@@ -24,3 +24,13 @@ p {
 .right-column {
   padding: 17px;
 }
+
+.note {
+  background-color: black;
+  padding: 2px;
+  color: white;
+  font-weight: bold;
+  margin-right: 10px;
+  font-size: 16px;
+  text-align: center;
+}

@@ -75,6 +75,10 @@ class Main extends Component<IProps, IState> {
                     ))}
                   </tbody>
                 </table>
+                <p>
+                  <span className="note">NOTE</span>You are seeing results
+                  scraped on: <span id="underlined">{archive[0]}</span>
+                </p>
               </TabPanel>
               <TabPanel>Hardest</TabPanel>
               <TabPanel>Recent</TabPanel>
@@ -130,10 +134,6 @@ class Main extends Component<IProps, IState> {
           </div>
         </div>
         <hr />
-        <p>
-          You are seeing results scraped on:{" "}
-          <span id="underlined">{archive[0]}</span>
-        </p>
       </div>
     );
   }
