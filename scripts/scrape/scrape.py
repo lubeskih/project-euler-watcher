@@ -6,7 +6,6 @@ import datetime
 from bs4 import BeautifulSoup
 
 num_of_pages = 14
-
 dump = []
 
 def extract(rows, dump_position):
@@ -20,6 +19,9 @@ def extract(rows, dump_position):
             json_object["title"] = cells[1].string
             json_object["solves"] = int(cells[2].string)
 
+            if (dump_position == 1):
+              dump[3] += 1 # number of records + 1
+
             dump[dump_position].append(json_object)
         except IndexError as e:
             pass
@@ -31,6 +33,9 @@ def main():
     
     dump.append([]) # Archive
     dump.append([]) # Recent
+
+    number_of_records = 0
+    dump.append(number_of_records)
 
     for page in range(1, num_of_pages + 1):
         page_body = requests.get(f"https://projecteuler.net/archives;page={page}")
