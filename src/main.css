@@ -16,3 +16,11 @@ p {
 #underlined {
   text-decoration: underline;
 }
+
+.react-tabs__tab--selected {
+  border-radius: 0 !important;
+}
+
+.right-column {
+  padding: 17px;
+}

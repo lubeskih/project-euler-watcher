@@ -1,10 +1,12 @@
 import React, { Component } from "react";
+import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 
 // Internal
 import "./main.css";
 import archive from "./archive.json";
 
 // Style
+import "react-tabs/style/react-tabs.css";
 import "bootstrap/dist/css/bootstrap.css";
 
 interface IProps {}
@@ -35,35 +37,48 @@ class Main extends Component<IProps, IState> {
 
     return (
       <div className="container">
+        <div className="row"></div>
         <div className="row">
           <div className="col-md-7 mt-5">
-            <table className="table table-sm">
-              <thead>
-                <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">Title</th>
-                  <th scope="col">Solves</th>
-                </tr>
-              </thead>
-              <tbody>
-                {data.map((n: any) => (
-                  <tr>
-                    <th scope="row">{n.id}</th>
-                    <td>
-                      {" "}
-                      <a
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        href={`https://projecteuler.net/problem=${n.id}`}
-                      >
-                        {n.title}
-                      </a>
-                    </td>
-                    <td>{new Intl.NumberFormat().format(n.solves)}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+            <Tabs>
+              <TabList>
+                <Tab>Archive</Tab>
+                <Tab>Top 10 hardest</Tab>
+                <Tab>Top 10 recent</Tab>
+              </TabList>
+
+              <TabPanel>
+                <table className="table table-sm">
+                  <thead>
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">Title</th>
+                      <th scope="col">Solves</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {data.map((n: any) => (
+                      <tr>
+                        <th scope="row">{n.id}</th>
+                        <td>
+                          {" "}
+                          <a
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            href={`https://projecteuler.net/problem=${n.id}`}
+                          >
+                            {n.title}
+                          </a>
+                        </td>
+                        <td>{new Intl.NumberFormat().format(n.solves)}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </TabPanel>
+              <TabPanel>Hardest</TabPanel>
+              <TabPanel>Recent</TabPanel>
+            </Tabs>
           </div>
           <div className="col-md-5 mt-5 right-column">
             <h6>About this site</h6>
