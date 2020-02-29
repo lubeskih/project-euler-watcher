@@ -69,6 +69,12 @@ class Main extends Component<{}, {}> {
               </a>
               . Enjoy using it as I enjoyed writing it.{" "}
             </p>
+            <blockquote className="mt-5">
+              “Think deeply about things. Don’t just go along because that’s the
+              way things are or that’s what your friends say. Consider the
+              effects, consider the alternatives, but most importantly, just
+              think.” ― Aaron Swartz
+            </blockquote>
           </div>
         </div>
         <hr />
