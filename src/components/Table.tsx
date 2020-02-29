@@ -2,11 +2,14 @@
 import React, { Component } from "react";
 import { observer } from "mobx-react";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
+import ReactPaginate from "react-paginate";
 
 import { Store } from "../store";
 
 // Style
 import "bootstrap/dist/css/bootstrap.css";
+import { computed } from "mobx";
+// import { computed } from "mobx";
 
 interface IProps {
   store: Store;
@@ -18,6 +21,38 @@ export class Archive extends Component<IProps, {}> {
     const store = this.props.store;
     return store.fetchArchive();
   }
+
+  @computed get reRenderRows() {
+    const store = this.props.store;
+    return (
+      <>
+        {store.problems.map(n => (
+          <tr key={n.id}>
+            <th scope="row">{n.id}</th>
+            <td>
+              {" "}
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href={`https://projecteuler.net/problem=${n.id}`}
+              >
+                {n.title}
+              </a>
+            </td>
+            <td>{new Intl.NumberFormat().format(n.solves)}</td>
+          </tr>
+        ))}
+      </>
+    );
+  }
+
+  handlePageClick = (data: any) => {
+    const store = this.props.store;
+    let selected = data.selected;
+    store.offset = Math.ceil(selected * store.PER_PAGE);
+    // store.nextOffset = store.offset + store.PER_PAGE;
+    store.problems = store.archive.slice(store.offset, store.nextOffset);
+  };
 
   render() {
     const store = this.props.store;
@@ -31,7 +66,7 @@ export class Archive extends Component<IProps, {}> {
         </TabList>
 
         <TabPanel>
-          <table className="table table-sm">
+          <table className="table table-striped table-bordered table-sm">
             <thead>
               <tr>
                 <th scope="col">#</th>
@@ -39,28 +74,32 @@ export class Archive extends Component<IProps, {}> {
                 <th scope="col">Solves</th>
               </tr>
             </thead>
-            <tbody>
-              {store.problems.map(n => (
-                <tr key={n.id}>
-                  <th scope="row">{n.id}</th>
-                  <td>
-                    {" "}
-                    <a
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      href={`https://projecteuler.net/problem=${n.id}`}
-                    >
-                      {n.title}
-                    </a>
-                  </td>
-                  <td>{new Intl.NumberFormat().format(n.solves)}</td>
-                </tr>
-              ))}
-            </tbody>
+            <tbody>{this.reRenderRows}</tbody>
           </table>
+          <div className="pagination">
+            <ReactPaginate
+              previousLabel={"previous"}
+              nextLabel={"next"}
+              // breakLabel={"..."}
+              pageCount={store.pageCount}
+              marginPagesDisplayed={2}
+              pageRangeDisplayed={3}
+              onPageChange={this.handlePageClick}
+              breakClassName={"page-item"}
+              breakLinkClassName={"page-link"}
+              containerClassName={"pagination"}
+              pageClassName={"page-item"}
+              pageLinkClassName={"page-link"}
+              previousClassName={"page-item"}
+              previousLinkClassName={"page-link"}
+              nextClassName={"page-item"}
+              nextLinkClassName={"page-link"}
+              activeClassName={"active"}
+            />
+          </div>
         </TabPanel>
         <TabPanel>
-          <table className="table table-sm">
+          <table className="table table-striped table-bordered table-sm">
             <thead>
               <tr>
                 <th scope="col">#</th>
@@ -69,7 +108,7 @@ export class Archive extends Component<IProps, {}> {
               </tr>
             </thead>
             <tbody>
-              {store.hardest.map(n => (
+              {store.hardest.slice(0, 15).map(n => (
                 <tr key={n.id}>
                   <th scope="row">{n.id}</th>
                   <td>
@@ -94,12 +133,17 @@ export class Archive extends Component<IProps, {}> {
             <span id="underlined">Archive</span> and{" "}
             <span id="underlined">Top 10 Hardest</span> tabs.
           </p>
-          <table className="table table-sm">
+          <table
+            id="dtBasicExample"
+            className="table table-striped table-bordered table-sm"
+          >
             <thead>
               <tr>
                 <th scope="col">#</th>
                 <th scope="col">Title</th>
-                <th scope="col">Solves</th>
+                <th className="th-sm sorting" scope="col">
+                  Solves
+                </th>
               </tr>
             </thead>
             <tbody>
