@@ -33,13 +33,12 @@ class Main extends Component<{}, {}> {
               >
                 Project Euler archive page
               </a>{" "}
-              but enables you to search and sort through the problems more
-              efficiently.
+              but gives you the ability to search and sort through the problems.
             </p>
 
             <h6>Initial problem</h6>
             <p>
-              This site is a result by my own frustration of not being able to
+              This site is a result of my own frustration of not being able to
               sort the problems on Project Euler by number of solves, sequential
               number or search through them by a title.
             </p>
@@ -49,8 +48,8 @@ class Main extends Component<{}, {}> {
               Every two hours, a cron starts a script that scrapes the problems
               from the archive page, and dumps the data into a JSON file. This
               page serves you the JSON file (which is about 80KB-100KB, or about
-              0.1 MB), and with trivial JavaScript magic, basic features of
-              sorting and searching are implemented.
+              0.1 MB), and with some JavaScript magic, basic features of sorting
+              and searching are implemented.
             </p>
             <h6>Other</h6>
             <div className="other"></div>
