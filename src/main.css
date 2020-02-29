@@ -1,8 +1,6 @@
 h6 {
   font-family: "Ubuntu Mono";
-  /* color: white; */
   color: #2b303b;
-  /* background-color: #2b303b; */
   padding: 0px 3px 3px 0px;
   display: inline-block;
   text-decoration: underline;
@@ -27,7 +25,7 @@ p {
 
 .note {
   background-color: black;
-  padding: 2px;
+  padding: 3px 9px 3px 9px;
   color: white;
   font-weight: bold;
   margin-right: 10px;
