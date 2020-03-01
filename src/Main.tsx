@@ -25,7 +25,7 @@ class Main extends Component<{}, {}> {
           <div className="col-md-5 mt-5 right-column">
             <h6>About this site</h6>
             <p>
-              What you see here is a page that mirrors the{" "}
+              What you see here is a site that mirrors the{" "}
               <a
                 target="_blank"
                 rel="noopener noreferrer"
@@ -51,8 +51,8 @@ class Main extends Component<{}, {}> {
               data into a JSON file. This page serves you the JSON file (which
               is about 80KB-100KB, or about 0.1 MB), and with some JavaScript
               magic, basic features of sorting and searching are implemented.
-              the results from the JSON file are pre-sorted before served, so
-              there is a trade-off of memory for computing speed.
+              The results from the JSON file are pre-sorted before served, so
+              there is a trade-off between memory and computing speed.
             </p>
             <h6>Other</h6>
             <div className="other"></div>
@@ -73,7 +73,7 @@ class Main extends Component<{}, {}> {
             </p>
             <p>
               <span className="note">NOTE</span>The search will return you the
-              first 20 results. Also, you can hit "Enter" to trigger a search.
+              first 20 results.
             </p>
             <blockquote className="mt-5">
               <p>
@@ -82,7 +82,16 @@ class Main extends Component<{}, {}> {
                 effects, consider the alternatives, but most importantly, just
                 think.”
               </p>
-              <span className="author">― Aaron Swartz</span>
+              <span className="author">
+                ―{" "}
+                <a
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href="https://en.wikipedia.org/wiki/Aaron_Swartz"
+                >
+                  Aaron Swartz
+                </a>
+              </span>
             </blockquote>
           </div>
         </div>
