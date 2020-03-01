@@ -56,3 +56,25 @@ blockquote:before {
 blockquote p {
   display: inline;
 }
+
+.pagination {
+  margin: auto;
+  margin-bottom: 10px;
+}
+
+.input {
+  float: left;
+  width: 80.5%;
+  height: 38px;
+  text-indent: 10px;
+  border: 1px solid #cccccc;
+}
+
+.input-button {
+  width: 6.5rem;
+  border-radius: 0 !important;
+}
+
+.author {
+  float: right;
+}

@@ -3,13 +3,14 @@ import React, { Component } from "react";
 import { observer } from "mobx-react";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import ReactPaginate from "react-paginate";
+import * as _ from "lodash";
 
-import { Store } from "../store";
+import { Store, IArchive } from "../store";
 
 // Style
 import "bootstrap/dist/css/bootstrap.css";
 import { computed } from "mobx";
-// import { computed } from "mobx";
+import { Button } from "react-bootstrap";
 
 interface IProps {
   store: Store;
@@ -48,10 +49,50 @@ export class Archive extends Component<IProps, {}> {
 
   handlePageClick = (data: any) => {
     const store = this.props.store;
-    let selected = data.selected;
+    const selected = data.selected;
+
     store.offset = Math.ceil(selected * store.PER_PAGE);
-    // store.nextOffset = store.offset + store.PER_PAGE;
     store.problems = store.archive.slice(store.offset, store.nextOffset);
+  };
+
+  handleSearch = (e: any) => {
+    const store = this.props.store;
+    store.searchInput = e.target.value;
+  };
+
+  handleSubmit = (e: any) => {
+    const store = this.props.store;
+    let newList: any = [];
+
+    if (e) {
+      newList = _.filter(store.archive, item => {
+        let title = "";
+
+        try {
+          title = item.title.toLowerCase();
+        } catch (e) {}
+
+        let filter = store.searchInput.toLowerCase();
+
+        return _.includes(title, filter);
+      });
+    }
+
+    const toJSONString = JSON.stringify(newList);
+    const toJSONObj: IArchive[] = JSON.parse(toJSONString);
+
+    store.problems = toJSONObj.slice(0, 20);
+    store.searchInput = "";
+  };
+
+  input: HTMLDivElement | null = null;
+
+  onKeyDown = (event: React.KeyboardEvent<HTMLDivElement>): void => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      event.stopPropagation();
+      this.handleSubmit(true);
+    }
   };
 
   render() {
@@ -66,6 +107,22 @@ export class Archive extends Component<IProps, {}> {
         </TabList>
 
         <TabPanel>
+          <input
+            type="text"
+            className="input mb-3"
+            onChange={this.handleSearch}
+            onKeyDown={this.onKeyDown}
+            placeholder="Goldbach's other conject..."
+            value={store.searchInput}
+          />
+          <Button
+            className="input-button ml-3 mb-3"
+            onClick={() => this.handleSubmit(true)}
+            variant="primary"
+            type="submit"
+          >
+            Search
+          </Button>
           <table className="table table-striped table-bordered table-sm">
             <thead>
               <tr>
@@ -80,10 +137,9 @@ export class Archive extends Component<IProps, {}> {
             <ReactPaginate
               previousLabel={"previous"}
               nextLabel={"next"}
-              // breakLabel={"..."}
               pageCount={store.pageCount}
               marginPagesDisplayed={2}
-              pageRangeDisplayed={3}
+              pageRangeDisplayed={2}
               onPageChange={this.handlePageClick}
               breakClassName={"page-item"}
               breakLinkClassName={"page-link"}
@@ -167,8 +223,8 @@ export class Archive extends Component<IProps, {}> {
           </table>
         </TabPanel>
         <p>
-          <span className="note">NOTE</span>You are seeing results scraped on:{" "}
-          <span id="underlined">{store.stamp}</span>
+          <span className="note">NOTE</span>You are seeing results last scraped
+          on: <span id="underlined">{store.stamp}</span>
         </p>
       </Tabs>
     );

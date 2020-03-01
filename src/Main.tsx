@@ -40,16 +40,17 @@ class Main extends Component<{}, {}> {
             <p>
               This site is a result of my own frustration of not being able to
               sort the problems on Project Euler by number of solves, sequential
-              number or search through them by a title.
+              number or search through them by a title (or maybe I missed
+              something? :v).
             </p>
 
             <h6>How does it work?</h6>
             <p>
-              Every two hours, a cron starts a script that scrapes the problems
-              from the archive page, and dumps the data into a JSON file. This
-              page serves you the JSON file (which is about 80KB-100KB, or about
-              0.1 MB), and with some JavaScript magic, basic features of sorting
-              and searching are implemented.
+              Every two hours, a cron starts a script (check the repository)
+              that scrapes the problems from the archive page, and dumps the
+              data into a JSON file. This page serves you the JSON file (which
+              is about 80KB-100KB, or about 0.1 MB), and with some JavaScript
+              magic, basic features of sorting and searching are implemented.
             </p>
             <h6>Other</h6>
             <div className="other"></div>
@@ -68,6 +69,10 @@ class Main extends Component<{}, {}> {
               </a>
               . Enjoy using it as I enjoyed writing it.{" "}
             </p>
+            <p>
+              <span className="note">NOTE:</span>The search will return you the
+              first 20 results. Also, you can hit "Enter" to trigger a search.
+            </p>
             <blockquote className="mt-5">
               “Think deeply about things. Don’t just go along because that’s the
               way things are or that’s what your friends say. Consider the
@@ -76,7 +81,6 @@ class Main extends Component<{}, {}> {
             </blockquote>
           </div>
         </div>
-        <hr />
       </div>
     );
   }

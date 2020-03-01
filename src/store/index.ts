@@ -1,7 +1,7 @@
 import { observable, computed } from "mobx";
 import * as _ from "lodash";
 
-interface IArchive {
+export interface IArchive {
   id: number;
   title: string;
   link: string;
@@ -27,6 +27,8 @@ export class Store {
   @computed get pageCount() {
     return this.numberOfRecords / this.PER_PAGE;
   }
+
+  @observable public searchInput = "";
 
   public fetchArchive() {
     return fetch("http://localhost:3000/archive.json")
