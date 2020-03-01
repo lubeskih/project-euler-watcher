@@ -55,7 +55,7 @@ class Main extends Component<{}, {}> {
             <h6>Other</h6>
             <div className="other"></div>
             <p>
-              You can find the <strong>GitHub REPOSITORY</strong>{" "}
+              You can find the <strong>REPOSITORY</strong>{" "}
               <a
                 target="_blank"
                 rel="noopener noreferrer"
@@ -74,10 +74,13 @@ class Main extends Component<{}, {}> {
               first 20 results. Also, you can hit "Enter" to trigger a search.
             </p>
             <blockquote className="mt-5">
-              “Think deeply about things. Don’t just go along because that’s the
-              way things are or that’s what your friends say. Consider the
-              effects, consider the alternatives, but most importantly, just
-              think.” ― Aaron Swartz
+              <p>
+                “Think deeply about things. Don’t just go along because that’s
+                the way things are or that’s what your friends say. Consider the
+                effects, consider the alternatives, but most importantly, just
+                think.”
+              </p>
+              <span className="author">― Aaron Swartz</span>
             </blockquote>
           </div>
         </div>
