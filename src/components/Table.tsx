@@ -10,7 +10,6 @@ import { Store, IArchive } from "../store";
 // Style
 import "bootstrap/dist/css/bootstrap.css";
 import { computed } from "mobx";
-import { Button } from "react-bootstrap";
 
 interface IProps {
   store: Store;
@@ -57,11 +56,6 @@ export class Archive extends Component<IProps, {}> {
 
   handleSearch = (e: any) => {
     const store = this.props.store;
-    store.searchInput = e.target.value;
-  };
-
-  handleSubmit = (e: any) => {
-    const store = this.props.store;
     let newList: any = [];
 
     if (e) {
@@ -72,7 +66,7 @@ export class Archive extends Component<IProps, {}> {
           title = item.title.toLowerCase();
         } catch (e) {}
 
-        let filter = store.searchInput.toLowerCase();
+        let filter = e.target.value.toLowerCase();
 
         return _.includes(title, filter);
       });
@@ -82,17 +76,6 @@ export class Archive extends Component<IProps, {}> {
     const toJSONObj: IArchive[] = JSON.parse(toJSONString);
 
     store.problems = toJSONObj.slice(0, 20);
-    store.searchInput = "";
-  };
-
-  input: HTMLDivElement | null = null;
-
-  onKeyDown = (event: React.KeyboardEvent<HTMLDivElement>): void => {
-    if (event.key === "Enter") {
-      event.preventDefault();
-      event.stopPropagation();
-      this.handleSubmit(true);
-    }
   };
 
   render() {
@@ -111,18 +94,8 @@ export class Archive extends Component<IProps, {}> {
             type="text"
             className="input mb-3"
             onChange={this.handleSearch}
-            onKeyDown={this.onKeyDown}
             placeholder="Goldbach's other conject..."
-            value={store.searchInput}
           />
-          <Button
-            className="input-button ml-3 mb-3"
-            onClick={() => this.handleSubmit(true)}
-            variant="primary"
-            type="submit"
-          >
-            Search
-          </Button>
           <table className="table table-striped table-bordered table-sm">
             <thead>
               <tr>

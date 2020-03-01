@@ -62,7 +62,7 @@ blockquote p {
 
 .input {
   float: left;
-  width: 80.5%;
+  width: 100%;
   height: 38px;
   text-indent: 10px;
   border: 1px solid #cccccc;
