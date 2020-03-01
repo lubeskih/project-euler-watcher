@@ -16,7 +16,12 @@ def extract(rows, dump_position):
         try:
             json_object["id"] = int(cells[0].string)
             json_object["link"] = f"https://projecteuler.net/problem={cells[0].string}"
-            json_object["title"] = cells[1].string
+            
+            if (cells[1].string):
+              json_object["title"] = cells[1].string
+            else:
+              json_object["title"] = "N/A"
+
             json_object["solves"] = int(cells[2].string)
 
             if (dump_position == 1):
