@@ -1,4 +1,0 @@
-> l = require('lodash')
-
-> archive = l.each(archive, item => item.solves = parseInt(item.solves, 10))
-> sorted = l.orderBy(archive, ['solves'], ['asc'])
