@@ -34,15 +34,14 @@ export class Store {
     return fetch("http://localhost:3000/archive.json")
       .then(response => response.json())
       .then(archive => {
-        this.stamp = archive[0] as string;
+        this.stamp = archive[0]["stamp"] as string;
+        this.numberOfRecords = archive[0]["records"];
 
-        this.archive = archive[1];
-        this.problems = archive[1].slice(0, this.PER_PAGE);
+        this.archive = archive[1]; // Everything from the archive
+        this.problems = archive[1].slice(0, this.PER_PAGE); // Only the first 15
 
-        this.hardest = _.orderBy(archive[1], ["solves"], ["asc"]);
+        this.hardest = _.orderBy(archive[1], ["solves"], ["asc"]); // Pre-order the hardest
         this.recent = archive[2].slice(0, 10);
-
-        this.numberOfRecords = archive[3];
       });
   }
 }

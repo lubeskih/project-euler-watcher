@@ -70,7 +70,7 @@ class Main extends Component<{}, {}> {
               . Enjoy using it as I enjoyed writing it.{" "}
             </p>
             <p>
-              <span className="note">NOTE:</span>The search will return you the
+              <span className="note">NOTE</span>The search will return you the
               first 20 results. Also, you can hit "Enter" to trigger a search.
             </p>
             <blockquote className="mt-5">
