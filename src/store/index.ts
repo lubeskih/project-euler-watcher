@@ -28,7 +28,10 @@ export class Store {
     return this.numberOfRecords / this.PER_PAGE;
   }
 
-  @observable public searchInput = "";
+  @observable public sortAs: "id" | "solves" = "id";
+
+  // if this is false, then we just assume the user wants to sort by desc
+  @observable public sortBy: "asc" | "desc" = "asc";
 
   public fetchArchive() {
     return fetch("http://localhost:3000/archive.json")
@@ -40,7 +43,7 @@ export class Store {
         this.archive = archive[1]; // Everything from the archive
         this.problems = archive[1].slice(0, this.PER_PAGE); // Only the first 15
 
-        this.hardest = _.orderBy(archive[1], ["solves"], ["asc"]); // Pre-order the hardest
+        this.hardest = _.orderBy(archive[1], ["solves"], ["asc"]).slice(0, 15); // Pre-order the hardest
         this.recent = archive[2].slice(0, 10);
       });
   }

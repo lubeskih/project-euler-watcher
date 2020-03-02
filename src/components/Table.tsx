@@ -4,6 +4,7 @@ import { observer } from "mobx-react";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import ReactPaginate from "react-paginate";
 import * as _ from "lodash";
+import Select from "react-select";
 
 import { Store, IArchive } from "../store";
 
@@ -14,6 +15,16 @@ import { computed } from "mobx";
 interface IProps {
   store: Store;
 }
+
+const SORT_AS_OPTIONS = [
+  { value: "id", label: "#" },
+  { value: "solves", label: "Solves" }
+];
+
+const SORT_BY_OPTIONS = [
+  { value: "asc", label: "🠕" },
+  { value: "desc", label: "🠗" }
+];
 
 @observer
 export class Archive extends Component<IProps, {}> {
@@ -26,22 +37,24 @@ export class Archive extends Component<IProps, {}> {
     const store = this.props.store;
     return (
       <>
-        {store.problems.map(n => (
-          <tr key={n.id}>
-            <th scope="row">{n.id}</th>
-            <td>
-              {" "}
-              <a
-                target="_blank"
-                rel="noopener noreferrer"
-                href={`https://projecteuler.net/problem=${n.id}`}
-              >
-                {n.title}
-              </a>
-            </td>
-            <td>{new Intl.NumberFormat().format(n.solves)}</td>
-          </tr>
-        ))}
+        {_.orderBy(store.problems, [store.sortAs], [store.sortBy])
+          .slice(0, store.PER_PAGE)
+          .map(n => (
+            <tr key={n.id}>
+              <th scope="row">{n.id}</th>
+              <td>
+                {" "}
+                <a
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href={`https://projecteuler.net/problem=${n.id}`}
+                >
+                  {n.title}
+                </a>
+              </td>
+              <td>{new Intl.NumberFormat().format(n.solves)}</td>
+            </tr>
+          ))}
       </>
     );
   }
@@ -78,6 +91,11 @@ export class Archive extends Component<IProps, {}> {
     store.problems = toJSONObj.slice(0, 20);
   };
 
+  onSortAsChange = (event: any) => {
+    const store = this.props.store;
+    store.sortAs = event.value;
+  };
+
   render() {
     const store = this.props.store;
 
@@ -90,12 +108,53 @@ export class Archive extends Component<IProps, {}> {
         </TabList>
 
         <TabPanel>
-          <input
-            type="text"
-            className="input mb-3"
-            onChange={this.handleSearch}
-            placeholder="Goldbach's other conject..."
-          />
+          <div className="row">
+            <div className="col-md-8">
+              <input
+                type="text"
+                className="input mb-3"
+                onChange={this.handleSearch}
+                placeholder="Goldbach's other conject..."
+              />
+            </div>
+            <div className="col-md-2">
+              {" "}
+              <Select
+                theme={theme => ({
+                  ...theme,
+                  borderRadius: 0,
+                  colors: {
+                    ...theme.colors,
+                    primary25: "lightgray",
+                    primary: "#000"
+                  }
+                })}
+                className="mb-2"
+                defaultValue={SORT_AS_OPTIONS[0]}
+                options={SORT_AS_OPTIONS}
+                onChange={this.onSortAsChange}
+              />
+            </div>
+            <div className="col-md-2">
+              {" "}
+              <Select
+                theme={theme => ({
+                  ...theme,
+                  borderRadius: 0,
+                  colors: {
+                    ...theme.colors,
+                    primary25: "lightgray",
+                    primary: "#000"
+                  }
+                })}
+                className="mb-2"
+                defaultValue={SORT_BY_OPTIONS[0]}
+                options={SORT_BY_OPTIONS}
+                // onChange={this.onReflectorChange}
+              />
+            </div>
+          </div>
+
           <table className="table table-striped table-bordered table-sm">
             <thead>
               <tr>
@@ -137,7 +196,7 @@ export class Archive extends Component<IProps, {}> {
               </tr>
             </thead>
             <tbody>
-              {store.hardest.slice(0, 15).map(n => (
+              {store.hardest.map(n => (
                 <tr key={n.id}>
                   <th scope="row">{n.id}</th>
                   <td>

@@ -44,11 +44,13 @@ def main():
     dump.append([]) # Archive
     dump.append([]) # Recent
 
-    """ 
+    """
+    Final dump should look like this:
+
     [
-      {stamp: "Sat, Feb 29, 2020 at 10:45 PM", records: 600 }, # METADATA
-      [{ id: 1, title: "example title" }, {...}], # ARCHIVE
-      [{ id: 5, title: "another example title" }, {...}] # RECENT PROBLEMS
+      {stamp: "Sat, Feb 29, 2020 at 10:45 PM", records: 600 },  # METADATA
+      [{ id: 1, title: "example title" }, {...}],               # ARCHIVE
+      [{ id: 5, title: "another example title" }, {...}]        # RECENT PROBLEMS
     ]
     """
 
@@ -74,10 +76,11 @@ def main():
     extract(rows, 2)
 
     print("Most recent problems extracted successfully.")
+    print("Dumping the data to a file..")
 
     with open('archive.json', 'w') as w:
-        print("Dumping the data to a file..")
         json.dump(dump, w)
-        print("Done.")
+    
+    print("Done. Exiting.")
 
 main()

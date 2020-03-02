@@ -68,12 +68,12 @@ blockquote p {
   border: 1px solid #cccccc;
 }
 
-.input-button {
-  width: 6.5rem;
-  border-radius: 0 !important;
-}
-
 .author {
   font-weight: bold;
   margin-left: 10px;
+}
+
+.arrows {
+  float: right;
+  cursor: pointer;
 }
