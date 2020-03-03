@@ -37,24 +37,22 @@ export class Archive extends Component<IProps, {}> {
     const store = this.props.store;
     return (
       <>
-        {_.orderBy(store.problems, [store.sortAs], [store.sortBy])
-          .slice(0, store.PER_PAGE)
-          .map(n => (
-            <tr key={n.id}>
-              <th scope="row">{n.id}</th>
-              <td>
-                {" "}
-                <a
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  href={`https://projecteuler.net/problem=${n.id}`}
-                >
-                  {n.title}
-                </a>
-              </td>
-              <td>{new Intl.NumberFormat().format(n.solves)}</td>
-            </tr>
-          ))}
+        {store.problems.slice(0, store.PER_PAGE).map(n => (
+          <tr key={n.id}>
+            <th scope="row">{n.id}</th>
+            <td>
+              {" "}
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href={`https://projecteuler.net/problem=${n.id}`}
+              >
+                {n.title}
+              </a>
+            </td>
+            <td>{new Intl.NumberFormat().format(n.solves)}</td>
+          </tr>
+        ))}
       </>
     );
   }
@@ -94,6 +92,17 @@ export class Archive extends Component<IProps, {}> {
   onSortAsChange = (event: any) => {
     const store = this.props.store;
     store.sortAs = event.value;
+
+    store.archive = _.orderBy(store.archive, [store.sortAs], [store.sortBy]);
+    store.problems = store.archive.slice(store.offset, store.nextOffset);
+  };
+
+  onSortByChange = (event: any) => {
+    const store = this.props.store;
+    store.sortBy = event.value;
+
+    store.archive = _.orderBy(store.archive, [store.sortAs], [store.sortBy]);
+    store.problems = store.archive.slice(store.offset, store.nextOffset);
   };
 
   render() {
@@ -150,7 +159,7 @@ export class Archive extends Component<IProps, {}> {
                 className="mb-2"
                 defaultValue={SORT_BY_OPTIONS[0]}
                 options={SORT_BY_OPTIONS}
-                // onChange={this.onReflectorChange}
+                onChange={this.onSortByChange}
               />
             </div>
           </div>
