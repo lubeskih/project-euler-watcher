@@ -51,8 +51,8 @@ class Main extends Component<{}, {}> {
               data into a JSON file. This page serves you the JSON file (which
               is about 80KB-100KB, or about 0.1 MB), and with some JavaScript
               magic, basic features of sorting and searching are implemented.
-              The results from the JSON file are pre-sorted before served, so
-              there is a trade-off between memory and computing speed.
+              Some of the results are pre-sorted before served, so there is a
+              trade-off between memory and computing speed.
             </p>
             <h6>Other</h6>
             <div className="other"></div>
