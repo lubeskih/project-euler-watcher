@@ -25,7 +25,7 @@ virtualenv venv --python=python3
 ```
 
 ```
-pip install -r requirements.txt
+pip install -r requirements.txt --user
 ```
 
 and to run it:
