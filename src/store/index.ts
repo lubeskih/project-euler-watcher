@@ -34,7 +34,7 @@ export class Store {
   @observable public sortBy: "asc" | "desc" = "asc";
 
   public fetchArchive() {
-    return fetch("http://localhost:3000/archive.json")
+    return fetch("/archive.json")
       .then(response => response.json())
       .then(archive => {
         this.stamp = archive[0]["stamp"] as string;
